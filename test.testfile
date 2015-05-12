@@ -1,0 +1,145 @@
+$$normal 1$$
+db.setProfilingLevel(2)
+$$1$$
+db.getName()
+$$1$$
+db.getCollectionNames()
+$$1$$
+db.comedy.insert({name:"Bill & Ted's Excellent Adventure", year:1989})
+$$1$$
+db.comedy.insert({name:"Wayne's World", year:1992})
+$$1$$
+db.comedy.insert({name:'The School of Rock', year:2003})
+$$1$$
+db.comedy.save({name:"Wayne's World", year:1992})
+$$1$$
+db.comedy.save({name:'The School of Rock', year:2003})
+$$1$$
+db.comedy.find()
+$$1$$
+db.comedy.find().limit(2)
+$$1$$
+db.comedy.findOne()
+$$1$$
+db.comedy.find({year:{$lt:1994}})
+$$1$$
+db.comedy.find({year:1992})
+$$1$$
+db.comedy.find({name:{$regex: /bill|steve/i}})
+$$1$$
+var names = ['bill', 'steve']
+names = names.join('|');
+var re = new RegExp(names, 'i')
+db.comedy.find({name:{$regex: re}})
+$$1$$
+db.comedy.find({year:{'$lt':1994}}, {name:true})
+$$1$$
+db.comedy.find({year:{'$lt':1994}}, {name:false})
+$$1$$
+db.articles.insert({title:'The Amazingness of MongoDB', meta:{author:'Mike Vallely', date:1321958582668, likes:23, tags:['mongo', 'amazing', 'mongodb']}, comments:[{by:'Steve', text:'Amazing article'}, {by:'Dave', text:'Thanks a ton!'}]})
+ db.articles.insert({title:'Mongo Business', meta:{author:'Chad Muska', date:1321958576231, likes:10, tags:['mongodb', 'business', 'mongo']}, comments:[{by:'Taylor', text:'First!'}, {by:'Rob', text:'I like it'}]})
+ db.articles.insert({title:'MongoDB in Mongolia', meta:{author:'Ghenghiz Khan', date:1321958598538, likes:75, tags:['mongo', 'mongolia', 'ghenghiz']}, comments:[{by:'Alex', text:'Dude, it rocks'}, {by:'Steve', text:'The best article ever!'}]})
+$$1$$
+db.articles.find({'meta.author':'Chad Muska'})
+$$1$$
+db.articles.find({'meta.likes':{$gt:10}})
+$$1$$
+db.articles.find({'meta.tags':'mongolia'})
+$$1$$
+db.articles.find({'comments.by':'Steve'})
+$$1$$
+db.articles.find({'comments.0.by':'Steve'})
+$$1$$
+db.students.find({score:100})
+$$1$$
+db.students.find({score:'100'})
+$$1$$
+db.comedy.find('this.year > 1990 && this.name != "The School of Rock"')
+$$1$$
+db.comedy.find({year:{$gt:1990}, name:{$ne:'The School of Rock'}})
+$$1$$
+db.comedy.find({$where: 'this.year > 2000'})
+$$1$$
+db.comedy.find({name:'The School of Rock', $where: 'this.year > 2000'})
+$$1$$
+db.comedy.update({name:"Bill & Ted's Excellent Adventure"}, {director:'Stephen Herek'})
+$$1$$
+db.comedy.update({name:"Bill & Ted's Excellent Adventure"}, {'$set':{director:'Stephen Herek', cast:['Keanu Reeves', 'Alex Winter']}})
+$$1$$
+db.comedy.update({name:"Bill & Ted's Excellent Adventure"}, {'$push':{cast:'George Carlin'}})
+$$1$$
+db.comedy.update({name:"Bill & Ted's Excellent Adventure"}, {'$push':{cast:'Chuck Norris'}})
+$$1$$
+db.comedy.update({name:"Bill & Ted's Excellent Adventure"}, {'$pull':{cast:'Chuck Norris'}})
+$$1$$
+db.comedy.update({name:'Hulk'}, {$unset:{cast:1}})
+$$1$$
+db.comedy.remove({name:'Hulk'})
+$$1$$
+db.comedy.drop()
+$$1$$
+db.comedy.count({})
+$$1$$
+db.comedy.count({year:{$gt:1990}})
+$$anomaly 1$$
+function createLongListOfNumbers()
+{
+    var count = 1000000;
+    var x = new Array(count);
+    for (var k = 0; k < count; ++k)
+    {
+        x[k] = k;
+    }
+    return {valueList: x};
+}
+db.test.insert(createLongListOfNumbers());
+$$1$$
+function createLongListOfNumbers()
+{
+    var count = 100000;
+    var x = new Array(count);
+    for (var k = 0; k < count; ++k)
+    {
+        x[k] = k;
+    }
+    return {valueList: x};
+}
+db.test.insert(createLongListOfNumbers());
+$$1$$
+function createLongListOfNumbers()
+{
+    var count = 300000;
+    var x = new Array(count);
+    for (var k = 0; k < count; ++k)
+    {
+        x[k] = k;
+    }
+    return {valueList: x};
+}
+db.test.insert(createLongListOfNumbers());
+$$1$$
+function createLongListOfNumbers()
+{
+    var count = 666666;
+    var x = new Array(count);
+    for (var k = 0; k < count; ++k)
+    {
+        x[k] = k;
+    }
+    return {valueList: x};
+}
+db.test.insert(createLongListOfNumbers());
+$$test 1$$
+db.articles.find({'meta.author':'Jane Doe'})
+$$1$$
+function createLongListOfNumbers()
+{
+    var count = 500000;
+    var x = new Array(count);
+    for (var k = 0; k < count; ++k)
+    {
+        x[k] = k;
+    }
+    return {valueList: x};
+}
+db.test.insert(createLongListOfNumbers());
